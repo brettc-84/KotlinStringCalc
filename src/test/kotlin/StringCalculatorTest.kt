@@ -25,6 +25,11 @@ class MyTests : BehaviorSpec() {
                     assertEquals(calc.Add("1,2"), 3)
                 }
             }
+            `when`("a long list of numbers is passed in") {
+                then("it should return the sum of all the numbers") {
+                    assertEquals(calc.Add("1,2,3,4"), 10)
+                }
+            }
         }
     }
 }
