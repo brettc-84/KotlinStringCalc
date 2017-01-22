@@ -6,7 +6,7 @@ class StringCalculator {
     fun Add(numbers: String) :Int {
         var total: Int =0
         if (!numbers.isEmpty()) {
-            val list = numbers.split(',')
+            val list = numbers.split(',','\n')
             for (n in list) {
                 total += n.toInt()
             }
