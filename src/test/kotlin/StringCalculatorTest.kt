@@ -30,9 +30,14 @@ class MyTests : BehaviorSpec() {
                     assertEquals(calc.Add("1,2,3,4"), 10)
                 }
             }
-            `when`("a newline is used as a delimeter") {
+            `when`("a newline is used as a delimiter") {
                 then("it should return the sum of all the numbers") {
                     assertEquals(calc.Add("1,2,3\n5"), 11)
+                }
+            }
+            `when`("a delimiter is specified as input") {
+                then ("it should return the sum of all the numbers") {
+                    assertEquals(calc.Add("//;\n1;2"), 3)
                 }
             }
         }
