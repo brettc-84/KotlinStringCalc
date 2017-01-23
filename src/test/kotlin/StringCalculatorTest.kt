@@ -1,4 +1,5 @@
 import io.kotlintest.specs.BehaviorSpec
+
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -38,6 +39,14 @@ class MyTests : BehaviorSpec() {
             `when`("a delimiter is specified as input") {
                 then ("it should return the sum of all the numbers") {
                     assertEquals(calc.Add("//;\n1;2"), 3)
+                }
+            }
+            `when`("a negative number is included as input") {
+                then("it should throw an exception") {
+                    val exception = shouldThrow<NumberFormatException> {
+                        calc.Add("1,2,-3")
+                    }
+                    assertEquals(exception.message, "Negatives not allowed")
                 }
             }
         }

@@ -3,6 +3,8 @@
  */
 class StringCalculator {
 
+
+
     fun sanitiseString(input: String) : String {
         var newString = input
         if (input.startsWith("//")) {
@@ -19,6 +21,9 @@ class StringCalculator {
             var niceNumbers = sanitiseString(numbers)
             val list = niceNumbers.split(',')
             for (n in list) {
+                if (n.toInt() < 0) {
+                    throw NumberFormatException("Negatives not allowed")
+                }
                 total += n.toInt()
             }
         }
