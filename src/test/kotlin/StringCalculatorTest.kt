@@ -49,6 +49,11 @@ class MyTests : BehaviorSpec() {
                     assertEquals(exception.message, "Negatives not allowed")
                 }
             }
+            `when`("a number greater than 1000 is passed in") {
+                then("it should be ignored") {
+                    assertEquals(calc.Add("1,2,1001,3"), 6)
+                }
+            }
         }
     }
 }

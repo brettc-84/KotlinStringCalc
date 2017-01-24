@@ -24,7 +24,9 @@ class StringCalculator {
                 if (n.toInt() < 0) {
                     throw NumberFormatException("Negatives not allowed")
                 }
-                total += n.toInt()
+                if (n.toInt() <= 1000) {
+                    total += n.toInt()
+                }
             }
         }
         return total
