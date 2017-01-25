@@ -3,6 +3,14 @@
  */
 class StringCalculator() {
 
+    fun getDelimiters(numberString: String) : Array<String> {
+        var result = Array<String>(0,{i->""})
+        numberString.slice(0..numberString.indexOf('\n')-1).split("][").forEach({
+            it -> result = result.plus(it.replace("/|\\]|\\[".toRegex(),""))
+        })
+        return result
+    }
+
     fun Add(numbers: String) : Int {
 
         if (numbers.isEmpty()) return 0
@@ -10,18 +18,9 @@ class StringCalculator() {
         var numberString = numbers
         var delimiters : Array<String> = arrayOf(",","\n")
 
-        if (numberString.startsWith("//[")) {
-
-            numberString.slice(0..numberString.indexOf('\n')-1).split("][").forEach({
-                it -> delimiters = delimiters.plus(it.replace("/|\\]|\\[".toRegex(),""))
-            })
-
-            val bracketIndex = numbers.lastIndexOf(']')
-            numberString = numberString.substring(bracketIndex+2)
-
-        } else if (numberString.startsWith("//")) {
-            delimiters = delimiters.plus(numbers.slice(2..2))
-            numberString = numberString.substring(4)
+        if (numberString.startsWith("//")) {
+            delimiters = delimiters.plus(getDelimiters(numberString))
+            numberString = numberString.substring(numberString.lastIndexOf('\n') + 1)
         }
 
         return numberString.split(*delimiters).map{
