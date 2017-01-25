@@ -1,34 +1,37 @@
 /**
- * Created by brettcoomer on 2017/01/22.
+ * Created by brettcoomer on 2017/01/25.
  */
-class StringCalculator {
+class StringCalculator() {
 
+    fun Add(numbers: String) : Int {
 
+        if (numbers.isEmpty()) return 0
 
-    fun sanitiseString(input: String) : String {
-        var newString = input
-        if (input.startsWith("//")) {
-            var delimiter = newString.substring(2,3)
-            val ind = input.indexOf('\n') + 1
-            newString = input.substring(ind).replace(delimiter,",")
+        var numberString = numbers
+        var delimiters : Array<String> = arrayOf(",","\n")
+
+        if (numberString.startsWith("//[")) {
+
+            numberString.slice(0..numberString.indexOf('\n')-1).split("][").forEach({
+                it -> delimiters = delimiters.plus(it.replace("/|\\]|\\[".toRegex(),""))
+            })
+
+            val bracketIndex = numbers.lastIndexOf(']')
+            numberString = numberString.substring(bracketIndex+2)
+
+        } else if (numberString.startsWith("//")) {
+            delimiters = delimiters.plus(numbers.slice(2..2))
+            numberString = numberString.substring(4)
         }
-        return newString.replace("\\n".toRegex(),",")
-    }
 
-    fun Add(numbers: String) :Int {
-        var total: Int =0
-        if (!numbers.isEmpty()) {
-            var niceNumbers = sanitiseString(numbers)
-            val list = niceNumbers.split(',')
-            for (n in list) {
-                if (n.toInt() < 0) {
-                    throw NumberFormatException("Negatives not allowed")
-                }
-                if (n.toInt() <= 1000) {
-                    total += n.toInt()
-                }
-            }
+        return numberString.split(*delimiters).map{
+            if (it.toInt() < 0)
+                throw NumberFormatException("Negatives not allowed")
+            it.toInt()
+        }.filter{
+            it <= 1000
+        }.sumBy{
+            it
         }
-        return total
     }
 }

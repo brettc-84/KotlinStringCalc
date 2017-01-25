@@ -54,6 +54,21 @@ class MyTests : BehaviorSpec() {
                     assertEquals(calc.Add("1,2,1001,3"), 6)
                 }
             }
+            `when`("a delimiter of any length in the following format //[delimiter]\n") {
+                then("it should be used as the delimiter and sum of numbers returned") {
+                    assertEquals(calc.Add("//[***]\n1***2***3"), 6)
+                }
+            }
+            `when`("multiple delimiters are specified like //[delim1][delim2]\n") {
+                then("it should still split and return sum of numbers returned") {
+                    assertEquals(calc.Add("//[*][%]\n1*2%3"), 6)
+                }
+            }
+            `when`("multiple multi-char delimiters are specified like //[delim1][delim2]\n") {
+                then("it should still split and return sum of numbers returned") {
+                    assertEquals(calc.Add("//[**][%]\n1**2%3"), 6)
+                }
+            }
         }
     }
 }
